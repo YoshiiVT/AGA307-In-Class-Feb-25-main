@@ -1,11 +1,26 @@
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine.Rendering;
 
+public enum EnemyType
+{
+    Onehanded,
+    Twohanded,
+    Archer
+}
+
+public enum PatrolType 
+{ 
+    Linear, 
+    PingPong, 
+    Random
+}
 public class EnemyManager : MonoBehaviour
 {
     public int initialSpawnCount = 6;
+    public float initialSpawnDelay = 1;
 
     public string killCondition = "J";
 
@@ -16,10 +31,13 @@ public class EnemyManager : MonoBehaviour
 
     public int EnemyCount => enemies.Count;
     public bool NoEnemies => enemies.Count == 0;
+
+    public Transform GetRandomSpawnPoint => spawnPoints[Random.Range(0, spawnPoints.Length)];
+    public Transform GetSpecificSpawnPoint(int _spawnPoint) => spawnPoints[_spawnPoint];
     void Start()
     {
-        SpawnEnemies();
-
+        //SpawnEnemies();
+        StartCoroutine(SpawnWithDelay(initialSpawnCount, initialSpawnDelay));
     }
 
     private void Update()
@@ -30,6 +48,19 @@ public class EnemyManager : MonoBehaviour
             KillSpecificEnemy(killCondition);
         if (Input.GetKeyDown(KeyCode.H))
             KillAllEnemies();
+    }
+
+    /// <summary>
+    /// Spawns the set amount of enemies with a delay between each spawn.
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator SpawnWithDelay (int _spawnCount, float _spawnDelay)
+    {
+        for (int i = 0; i < _spawnCount; i++)
+        {
+            yield return new WaitForSeconds(_spawnDelay);
+            SpawnEnemy();
+        }
     }
 
     /// <summary>
@@ -58,7 +89,7 @@ public class EnemyManager : MonoBehaviour
 
         GameObject enemy = Instantiate(enemyTypes[rndEnemy], spawnPoints[rndSpawn].transform.position, spawnPoints[rndSpawn].transform.rotation);
         enemy.name = enemyNames[rndName];
-
+        enemy.GetComponent<Enemy>().Initialize(this, GetRandomSpawnPoint);
         enemies.Add(enemy);
 
         print(enemies.Count);
