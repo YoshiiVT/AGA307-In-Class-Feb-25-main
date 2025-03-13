@@ -872,6 +872,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 734725808}
+  - component: {fileID: 734725809}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -894,6 +895,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &734725809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734725807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca25eb195d07a56439fd4abefa89ab12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameState: 1
+  difficulty: 0
+  score: 0
 --- !u!1 &794248058 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6529534199887740898, guid: cd32442e201a7a145a8f67aa484acd4d, type: 3}
@@ -1296,7 +1312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 908110439128907768, guid: cd32442e201a7a145a8f67aa484acd4d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 908122688777992380, guid: cd32442e201a7a145a8f67aa484acd4d, type: 3}
       propertyPath: m_Layer
@@ -2265,8 +2281,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 410087041}
   - {fileID: 832575519}
+  - {fileID: 734725808}
   - {fileID: 589461151}
   - {fileID: 832795383}
   - {fileID: 817060288}
   - {fileID: 1681801524}
-  - {fileID: 734725808}

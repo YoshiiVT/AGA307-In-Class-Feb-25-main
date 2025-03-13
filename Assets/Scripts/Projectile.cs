@@ -1,9 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
     public GameObject hitParticles;
+
+    public int damage;
 
     void Start()
     {
@@ -20,10 +23,8 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            //Change the colour of the collided object
-            collision.gameObject.GetComponentInChildren<Renderer>().material.color = Color.red;
-            //Destroy the collision object
-            Destroy(collision.gameObject, 1);
+            if(collision.gameObject.GetComponent<Enemy>() != null) //Sanity Backup
+                collision.gameObject.GetComponent<Enemy>().Hit(damage);
         }    
         DestroyProjectile(); 
     }

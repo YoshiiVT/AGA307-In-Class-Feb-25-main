@@ -39192,6 +39192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitParticles: {fileID: 8652319566727268765, guid: 5b66f1485b200924d9bb87052fd6c380, type: 3}
+  damage: 50
 --- !u!1 &4771012519701181538
 GameObject:
   m_ObjectHideFlags: 0

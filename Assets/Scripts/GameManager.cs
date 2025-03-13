@@ -15,13 +15,20 @@ public enum Difficulty
     Hard,
     HurtMeHarder
 }
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public GameState gameState;
-    public Difficulty difficulty;
 
-    private void Start()
+    [SerializeField]
+    private GameState gameState;
+    public GameState GameState => gameState;
+    [SerializeField]
+    private Difficulty difficulty;
+    [SerializeField]
+    private int score;
+
+    public void AddScore(int _score)
     {
-        
+        score += _score;
+        print("Score : " + score);
     }
 }

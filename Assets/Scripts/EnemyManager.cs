@@ -17,7 +17,7 @@ public enum PatrolType
     PingPong, 
     Random
 }
-public class EnemyManager : MonoBehaviour
+public class EnemyManager : Singleton<EnemyManager>
 {
     public int initialSpawnCount = 6;
     public float initialSpawnDelay = 1;
@@ -27,7 +27,7 @@ public class EnemyManager : MonoBehaviour
     private string[] enemyNames = new string[] { "Wovok the Abomination", "Kadan the Corruptor", "Istadum the Doctor", "Stratic Shade", "Riovok Livid", "Pokhar the Animator", "Stigan the Plaguemaster", "Nobrum Rotheart", "Soutic the Hallowed", "Wraexor Doomwhisper", "Yauzius the Corruptor", "Utozad Morbide", "Gitic the Animator", "Zothik the Fleshrender", "Ezaurow Mortice", "Owobrum the Crippled", "Vrozor the Black", "Grethum Plasma", "Kezad Calamity", "Hekras Blight " };
     public Transform[] spawnPoints;
     public GameObject[] enemyTypes;
-    public List<GameObject> enemies;
+    public List<Enemy> enemies;
 
     public int EnemyCount => enemies.Count;
     public bool NoEnemies => enemies.Count == 0;
@@ -48,6 +48,8 @@ public class EnemyManager : MonoBehaviour
             KillSpecificEnemy(killCondition);
         if (Input.GetKeyDown(KeyCode.H))
             KillAllEnemies();
+        if (Input.GetKeyDown(KeyCode.C))
+            KillClosestEnemy();
     }
 
     /// <summary>
@@ -56,11 +58,14 @@ public class EnemyManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator SpawnWithDelay (int _spawnCount, float _spawnDelay)
     {
+       
         for (int i = 0; i < _spawnCount; i++)
         {
             yield return new WaitForSeconds(_spawnDelay);
+            if (_CurrentGameState == GameState.Playing)
             SpawnEnemy();
         }
+        
     }
 
     /// <summary>
@@ -89,8 +94,8 @@ public class EnemyManager : MonoBehaviour
 
         GameObject enemy = Instantiate(enemyTypes[rndEnemy], spawnPoints[rndSpawn].transform.position, spawnPoints[rndSpawn].transform.rotation);
         enemy.name = enemyNames[rndName];
-        enemy.GetComponent<Enemy>().Initialize(this, GetRandomSpawnPoint);
-        enemies.Add(enemy);
+        enemy.GetComponent<Enemy>().Initialize(GetRandomSpawnPoint);
+        enemies.Add(enemy.GetComponent<Enemy>());
 
         print(enemies.Count);
 
@@ -100,9 +105,10 @@ public class EnemyManager : MonoBehaviour
     /// Kills an Enemy
     /// </summary>
     /// <param name="_enemy">The Enemy we want to kill</param>
-    private void KillEnemy(GameObject _enemy)
+    private void KillEnemy(Enemy _enemy)
     {
-        Destroy(_enemy);
+        GameManager.instance.AddScore(_enemy.MyScore);
+        Destroy(_enemy.gameObject);
         enemies.Remove(_enemy);
     }
 
@@ -116,6 +122,13 @@ public class EnemyManager : MonoBehaviour
 
         int rndEnemy = Random.Range(0, EnemyCount);
         KillEnemy(enemies[rndEnemy]);
+    }
+
+    private void KillClosestEnemy()
+    {
+        Transform closest = GetClosestObject(_PLAYER.transform, enemies).transform;
+        print(closest.name);
+        KillEnemy(closest.GetComponent<Enemy>());
     }
 
     /// <summary>
