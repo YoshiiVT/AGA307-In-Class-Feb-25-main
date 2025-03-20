@@ -6,22 +6,32 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 public class Enemy : GameBehaviour
 {
+    [Header("Basics")]
     public EnemyType myType;
     public PatrolType myPatrolType;
     public float moveDistance = 1000f;
     public float stoppingDistance = 0.3f;
+
+    [Header("Stats")]
     private float mySpeed = 5;
-    private float myHealth;
+    public int myHealth;
+    private int myMaxHealth;
     private int myDamage;
+
+    [Header("Score")]
     private int myScore;
     public int MyScore => myScore;
 
+    [Header("Patrols")]
     private Transform moveToPos;    //Needed for All Movement
     private Transform startPos;     //Needed for PingPong Movement
     private Transform endPos;       //Needed for PingPong Movement
     private bool reverse;           //Needed for PingPong Movement
     private int patrolPoint;        //Needed for Linear Movement
-    public void Initialize(Transform _startPos)
+
+    [Header("Health Bar")]
+    public HealthBar healthBar;
+    public void Initialize(Transform _startPos, string _name)
     {
         switch(myType)
         {
@@ -54,11 +64,14 @@ public class Enemy : GameBehaviour
                 myPatrolType = PatrolType.Random;
                 break;
         }
+        myMaxHealth = myHealth;
 
         startPos = _startPos;
         endPos = _EM.GetRandomSpawnPoint;
         moveToPos = endPos;
 
+        healthBar.SetName(_name);
+        healthBar.UpdateHealthBar(myHealth, myMaxHealth);
         /*
         if(myType == EnemyType.Onehanded) 
         {
@@ -119,6 +132,8 @@ public class Enemy : GameBehaviour
     {
         myHealth -= _damage;
         _GM.AddScore(myScore);
+
+        healthBar.UpdateHealthBar(myHealth, myMaxHealth);
 
         if (myHealth <= 0)
             myHealth = 0;
