@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour
 {
     public GameObject hitParticles;
 
-    public int damage;
+    public int damage = 10;
 
     void Start()
     {
