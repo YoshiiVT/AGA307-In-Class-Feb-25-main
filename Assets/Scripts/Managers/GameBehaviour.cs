@@ -7,6 +7,7 @@ public class GameBehaviour : MonoBehaviour
     protected static EnemyManager _EM { get { return EnemyManager.instance; } }
     protected static PlayerController _PLAYER { get { return PlayerController.instance; } }
     protected static UIManager _UI { get { return UIManager.instance; } }
+    protected static SaveManager _SAVE { get { return SaveManager.INSTANCE; } }
 
     public GameState _CurrentGameState => GameManager.instance.GameState;
 

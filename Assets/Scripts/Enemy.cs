@@ -31,6 +31,10 @@ public class Enemy : GameBehaviour
 
     [Header("Health Bar")]
     public HealthBar healthBar;
+
+    [Header("Animator")]
+    [SerializeField]
+    private Animator anim;
     public void Initialize(Transform _startPos, string _name)
     {
         switch(myType)
@@ -136,14 +140,26 @@ public class Enemy : GameBehaviour
         healthBar.UpdateHealthBar(myHealth, myMaxHealth);
 
         if (myHealth <= 0)
+        {
             myHealth = 0;
             Die();
+        }
+        else
+            PlayAnimation("Hit", 3);
     }
 
     public void Die()
     {
         StopAllCoroutines();
-        
+        PlayAnimation("Die", 3);
+        GetComponent<Collider>().enabled = false;
+        healthBar.gameObject.SetActive(false);
+    }
+
+    private void PlayAnimation(string _animationName, int _animationCount)
+    {
+        int rnd = Random.Range(1, _animationCount + 1);
+        anim.SetTrigger(_animationName + rnd);
     }
     /*
     private IEnumerator Move()

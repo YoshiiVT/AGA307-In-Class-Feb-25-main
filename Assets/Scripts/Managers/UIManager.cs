@@ -7,11 +7,13 @@ public class UIManager : Singleton<UIManager>
 {
     
     [SerializeField] private TMP_Text scoreText;
+    public TMP_Text highscoreText;
     [SerializeField] private TMP_Text enemyCountText;
 
     private void Start()
     {
         ResetUI();
+        highscoreText.text = "Highscore: " + _SAVE.GetHighestScore().ToString();
     }
 
     private void ResetUI()
@@ -23,6 +25,7 @@ public class UIManager : Singleton<UIManager>
     public void UpdateScore(int _score)
     {
         scoreText.text = "Score Count: " + _score;
+        highscoreText.text = "Highscore: " + _SAVE.GetHighestScore().ToString();
     }
 
     public void UpdateEnemyCount(int _enemyCount)

@@ -1566,7 +1566,7 @@ Animator:
   m_GameObject: {fileID: 159544}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 20300ac630e0fcd4dbab63a9b39cdafa, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 87586819169fcb54ea4ea7178529f6e0, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1596,6 +1596,7 @@ MonoBehaviour:
   stoppingDistance: 0.3
   myHealth: 0
   healthBar: {fileID: 1929246293925400301}
+  anim: {fileID: 9536858}
 --- !u!136 &4973084178293897233
 CapsuleCollider:
   m_ObjectHideFlags: 0
