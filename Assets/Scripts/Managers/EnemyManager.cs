@@ -11,11 +11,21 @@ public enum EnemyType
     Archer
 }
 
-public enum PatrolType 
+public enum PatrolType
+{
+    Linear,
+    PingPong,
+    Random,
+}
+
+public enum EnemyState 
 { 
-    Linear, 
-    PingPong, 
-    Random
+    Patrol,
+    Detect,
+    Chase,
+    Attack,
+    Hit,
+    Die
 }
 public class EnemyManager : Singleton<EnemyManager>
 {

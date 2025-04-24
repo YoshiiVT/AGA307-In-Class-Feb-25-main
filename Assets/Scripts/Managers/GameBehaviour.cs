@@ -8,6 +8,7 @@ public class GameBehaviour : MonoBehaviour
     protected static PlayerController _PLAYER { get { return PlayerController.instance; } }
     protected static UIManager _UI { get { return UIManager.instance; } }
     protected static SaveManager _SAVE { get { return SaveManager.INSTANCE; } }
+    protected static AudioManager _AUDIO { get { return AudioManager.instance; } }
 
     public GameState _CurrentGameState => GameManager.instance.GameState;
 
